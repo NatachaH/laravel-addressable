@@ -16,7 +16,24 @@ class Address extends Model
      * @var array
      */
     protected $fillable = [
-        'street_1','street_2','number','zip','city','state','country','type'
+        'street_1','street_2','zip','city','state','country','type'
     ];
+
+    /**
+     * Get the postal address format.
+     *
+     * @return string
+     */
+    public function getPostalAddressAttribute()
+    {
+        $break = "\n";
+
+        $address = $this->street_1.$break;
+        $address .= $this->street_2 ? $this->street_2.$break : '';
+        $address .= $this->zip.' '.$this->city.$break;
+        $address .= $this->country ?? '';
+
+        return nl2br($address);
+    }
 
 }

@@ -17,10 +17,9 @@ class CreateAddressesTable extends Migration
             $table->bigIncrements('id');
             $table->string('street_1')->nullable();
             $table->string('street_2')->nullable();
-            $table->tinyInteger('number')->nullable();
             $table->smallInteger('zip')->nullable();
             $table->string('city')->nullable();
-            $table->smallInteger('state')->nullable();
+            $table->string('state')->nullable();
             $table->string('country')->nullable();
             $table->string('type')->nullable();
             $table->morphs('addressable');

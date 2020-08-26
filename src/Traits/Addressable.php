@@ -20,11 +20,18 @@ trait Addressable
           // After an item is saved
           static::saved(function($model)
           {
-              // Add some translations
+              // Add an address
               if(request()->has('address'))
               {
                   $model->setAddress(request()->address);
               }
+
+              // Add some addresses
+              if(request()->has('addresses'))
+              {
+                  $model->setAddresses(request()->addresses);
+              }
+
           });
 
           // Before an item is deleted
@@ -42,7 +49,7 @@ trait Addressable
               }
           });
 
-          // Before an item is restored, restore the translations
+          // Before an item is restored, restore the addresses
           if(method_exists(static::class,'restoring'))
           {
               static::restoring(function ($model)
@@ -73,7 +80,7 @@ trait Addressable
       }
 
       /**
-       * Get address for a model.
+       * Get an address for a model.
        * @param string $field
        * @param string $lang
        */
@@ -94,18 +101,32 @@ trait Addressable
               [
                 'addressable_id' => $this->id,
                 'addressable_type' => get_class($this),
-                'type' => $address['type']
+                'type' => $address['type'] ?? null
               ],
               [
-                'street_1'    => $address['street'],
-                'street_2' => $address['street_2'],
-                'number'    => $address['number'],
-                'zip'       => $address['zip'],
-                'city'      => $address['city'],
-                'state'     => $address['state'],
-                'country'   => $address['country']
+                'street_1'  => $address['street_1'] ?? null,
+                'street_2'  => $address['street_2'] ?? null,
+                'zip'       => $address['zip'] ?? null,
+                'city'      => $address['city'] ?? null,
+                //'state'     => $address['state'] ?? null,
+                'country'   => $address['country'] ?? null
               ]
           );
+
+      }
+
+      /**
+       * Create or update multiple addresses for a model.
+       * @param array $address
+       */
+      public function setAddresses($addresses)
+      {
+
+          foreach ($addresses as $key => $address)
+          {
+              $address['type'] = $key;
+              $this->setAddress($address);
+          }
 
       }
 
