@@ -1,0 +1,24 @@
+{
+    "name": "nh/addressable",
+    "description": "Make a Laravel model addressable",
+    "license": "MIT",
+    "type": "library",
+    "require": {},
+    "author": {
+        "name": "Natacha Herth",
+        "email": "info@natachaherth.ch"
+    },
+    "autoload": {
+        "psr-4": {
+            "Nh\\Addressable\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Nh\\Addressable\\AddressableServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
+}
