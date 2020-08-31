@@ -108,7 +108,7 @@ trait Addressable
                 'street_2'  => $address['street_2'] ?? null,
                 'zip'       => $address['zip'] ?? null,
                 'city'      => $address['city'] ?? null,
-                //'state'     => $address['state'] ?? null,
+                'state'     => $address['state'] ?? null,
                 'country'   => $address['country'] ?? null
               ]
           );
