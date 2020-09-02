@@ -37,7 +37,6 @@ trait Addressable
           // Before an item is deleted
           static::deleting(function ($model)
           {
-              $addresses_to_delete = $model->addresses()->withTrashed()->get();
               $hasSoftDelete = in_array('Illuminate\Database\Eloquent\SoftDeletes', class_uses($model));
               $isForceDelete = !$hasSoftDelete || $model->isForceDeleting();
 
