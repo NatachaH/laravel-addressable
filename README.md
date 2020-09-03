@@ -84,7 +84,7 @@ $user->setAddresses([
 ])
 ```
 
-## Events
+# Events
 
 You can use the **AddressEvent** for dispatch events that happen to the addresses.
 
