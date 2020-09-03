@@ -83,3 +83,13 @@ $user->setAddresses([
     'shipping' => ['street_1' => 'My streetname for Shipping'],
 ])
 ```
+
+## Events
+
+You can use the **AddressEvent** for dispatch events that happen to the addresses.
+
+```
+AddressEvent::dispatch('address.created', $model);
+```
+
+By default the method **$model->setAddress()** will fire the event **address.created** and **address.updated**
