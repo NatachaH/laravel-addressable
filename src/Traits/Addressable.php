@@ -4,6 +4,7 @@ namespace Nh\Addressable\Traits;
 use App;
 use Illuminate\Database\Eloquent\Builder;
 
+use nh\Addressable\Events\AddressEvent;
 use Nh\Addressable\Address;
 
 trait Addressable
@@ -96,7 +97,7 @@ trait Addressable
       {
 
           // Update or create the translation
-          $this->addresses()->updateOrCreate(
+          $address = $this->addresses()->updateOrCreate(
               [
                 'addressable_id' => $this->id,
                 'addressable_type' => get_class($this),
@@ -111,6 +112,15 @@ trait Addressable
                 'country'   => $address['country'] ?? null
               ]
           );
+
+          // Dispatch the event
+          if($address->wasChanged())
+          {
+              AddressEvent::dispatch('address.updated', $model);
+          } else {
+              AddressEvent::dispatch('address.created', $model);
+          }
+
 
       }
 
