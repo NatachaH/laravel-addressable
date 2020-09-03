@@ -10,16 +10,16 @@ class AddressEvent
     use Dispatchable, SerializesModels;
 
     public $name;
-    public $address;
+    public $model;
 
     /**
      * Create a new event instance.
-     *
-     * @return void
+     * @param string  $name
+     * @param \Illuminate\Database\Eloquent\Model  $model
      */
-    public function __construct($name, $address)
+    public function __construct($name,$model)
     {
-        $this->name    = $name;
-        $this->address = $address;
+          $this->name    = $name;
+          $this->model   = $model;
     }
 }

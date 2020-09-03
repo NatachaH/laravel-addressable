@@ -4,7 +4,7 @@ namespace Nh\Addressable\Traits;
 use App;
 use Illuminate\Database\Eloquent\Builder;
 
-use nh\Addressable\Events\AddressEvent;
+use Nh\Addressable\Events\AddressEvent;
 use Nh\Addressable\Address;
 
 trait Addressable
@@ -116,9 +116,9 @@ trait Addressable
           // Dispatch the event
           if($address->wasChanged())
           {
-              AddressEvent::dispatch('address.updated', $model);
+              AddressEvent::dispatch('address.updated', $this);
           } else {
-              AddressEvent::dispatch('address.created', $model);
+              AddressEvent::dispatch('address.created', $this);
           }
 
 
