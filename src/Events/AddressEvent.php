@@ -19,7 +19,7 @@ class AddressEvent
      */
     public function __construct($name,$model)
     {
-          $this->name    = $name;
+          $this->name    = 'address.'.$name;
           $this->model   = $model;
     }
 }

@@ -116,9 +116,9 @@ trait Addressable
           // Dispatch the event
           if($address->wasRecentlyCreated)
           {
-              AddressEvent::dispatch('address.created', $this);
+              AddressEvent::dispatch('created', $this);
           } else if($address->wasChanged()) {
-              AddressEvent::dispatch('address.updated', $this);
+              AddressEvent::dispatch('updated', $this);
           }
 
 
