@@ -5,7 +5,7 @@ use App;
 use Illuminate\Database\Eloquent\Builder;
 
 use Nh\Addressable\Events\AddressEvent;
-use App\Address;
+use App\Models\Address;
 
 trait Addressable
 {
