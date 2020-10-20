@@ -6,12 +6,6 @@ Install the package via composer:
 composer require nh/addressable
 ```
 
-Publish the migration file for the addressable:
-
-```
-php artisan vendor:publish --tag=addressable
-```
-
 To make a model addressable, add the **Addressable** trait to your model:
 
 ```
@@ -64,7 +58,7 @@ $user->address('billing')
 You can retrieve the postal address formated.
 
 ```
-$user->address()->postal
+$user->address()->formated
 ```
 
 ## Functions

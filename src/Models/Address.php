@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace Nh\Addressable\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -24,7 +24,7 @@ class Address extends Model
      *
      * @return string
      */
-    public function getPostalAddressAttribute()
+    public function getFormatedAttribute()
     {
         $break = "\n";
 

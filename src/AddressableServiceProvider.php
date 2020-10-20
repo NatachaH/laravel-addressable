@@ -24,11 +24,12 @@ class AddressableServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-      // VENDORS
-      $this->publishes([
-          __DIR__.'/../stubs/database/migrations/2020_08_24_000000_create_addresses_table.php' => base_path('database/migrations/2020_08_24_000000_create_addresses_table.php'),
-          __DIR__.'/../stubs/app/Models/Address.php' => app_path('Models/Address.php')
-      ], 'addressable');
+
+      // TRANSLATIONS
+      $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'addressable');
+
+      // MIGRATIONS
+      $this->loadMigrationsFrom(__DIR__.'/../stubs/database/migrations/2020_08_24_000000_create_addresses_table.php');
 
     }
 }
