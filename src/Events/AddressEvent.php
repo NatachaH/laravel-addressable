@@ -10,6 +10,7 @@ class AddressEvent
     use Dispatchable, SerializesModels;
 
     public $name;
+    public $relation;
     public $model;
 
     /**
@@ -19,7 +20,8 @@ class AddressEvent
      */
     public function __construct($name,$model)
     {
-          $this->name    = 'address.'.$name;
-          $this->model   = $model;
+          $this->name     = $name;
+          $this->relation = 'address';
+          $this->model    = $model;
     }
 }
