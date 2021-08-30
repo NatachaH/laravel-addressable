@@ -70,23 +70,56 @@ trait Addressable
       }
 
       /**
-       * Check if the model has some addresses.
-       * @param boolean $withTrashed
-       * @return boolean
+       * Get the default address of the model.
+       * @return App\Models\Address
        */
-      public function hasAddresses($withTrashed = false)
+       public function address()
+       {
+            $type = $this->addressable['default'] ?? null;
+            return $this->morphOne(Address::class, 'addressable')->ofMany(['id' => 'max'], function ($query) use ($type) {
+                $query->where('type', $type);
+            });
+       }
+
+       /**
+        * Check if the model has some addresses.
+        * @param boolean $withTrashed
+        * @param string $type
+        * @return boolean
+        */
+       public function hasAddresses($withTrashed = false, $type = null)
+       {
+           $query = $this->addresses();
+
+           if($withTrashed)
+           {
+               $query = $query->withTrashed();
+           }
+
+           if(!empty($type))
+           {
+               $query = $query->where('type',$type);
+           }
+
+           return $query->exists();
+       }
+
+      /**
+       * Get all addresses for a model by type.
+       * @param string $type
+       */
+      public function addressesByType($type)
       {
-        return $withTrashed ? $this->addresses()->withTrashed()->exists() : $this->addresses()->exists();
+          return $this->addresses->where('type',$type);
       }
 
       /**
-       * Get an address for a model.
-       * @param string $field
-       * @param string $lang
+       * Get an address for a model by type.
+       * @param string $type
        */
-      public function address($type = null)
+      public function addressByType($type)
       {
-          return $this->addresses()->firstOrNew(['type' => $type]);
+          return $this->addressesByType($type)->last();
       }
 
       /**
@@ -95,15 +128,15 @@ trait Addressable
        */
       public function setAddress($address)
       {
-
           // Update or create the translation
           $address = $this->addresses()->updateOrCreate(
               [
-                'addressable_id' => $this->id,
-                'addressable_type' => get_class($this),
-                'type' => $address['type'] ?? null
+                'id'               => $address['id'],
+                'addressable_id'   => $this->id,
+                'addressable_type' => get_class($this)
               ],
               [
+                'type'      => $address['type'] ?? null,
                 'street_1'  => $address['street_1'] ?? null,
                 'street_2'  => $address['street_2'] ?? null,
                 'zip'       => $address['zip'] ?? null,
@@ -113,6 +146,7 @@ trait Addressable
               ]
           );
 
+
           // Dispatch the event
           if($address->wasRecentlyCreated)
           {
@@ -120,8 +154,6 @@ trait Addressable
           } else if($address->wasChanged()) {
               AddressEvent::dispatch('updated', $this);
           }
-
-
       }
 
       /**
@@ -130,13 +162,11 @@ trait Addressable
        */
       public function setAddresses($addresses)
       {
-
           foreach ($addresses as $key => $address)
           {
               $address['type'] = $key;
               $this->setAddress($address);
           }
-
       }
 
 }
