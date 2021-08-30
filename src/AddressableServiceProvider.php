@@ -35,7 +35,7 @@ class AddressableServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../database/migrations/2020_08_24_000000_create_addresses_table.php' => base_path('database/migrations/2020_04_10_000001_create_roles_table.php'),
             __DIR__.'/Models/Address.php' => app_path('Models/Address.php'),
-        ], 'adressable');
+        ], 'addressable');
 
     }
 }
