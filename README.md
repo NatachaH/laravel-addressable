@@ -9,7 +9,7 @@ composer require nh/addressable
 Publish the databases and the models for the addresses:
 
 ```
-php artisan vendor:publish --tag=adressable
+php artisan vendor:publish --tag=addressable
 ```
 
 To make a model addressable, add the **Addressable** trait to your model:
