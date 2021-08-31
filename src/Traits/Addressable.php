@@ -131,7 +131,7 @@ trait Addressable
           // Update or create the translation
           $address = $this->addresses()->updateOrCreate(
               [
-                'id'               => $address['id'],
+                'id'               => $address['id'] ?? null,
                 'addressable_id'   => $this->id,
                 'addressable_type' => get_class($this)
               ],
