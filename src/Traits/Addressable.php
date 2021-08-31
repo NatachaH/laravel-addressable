@@ -44,8 +44,10 @@ trait Addressable
               if($isForceDelete)
               {
                 $model->addresses()->forceDelete();
+                AddressEvent::dispatch('force-deleted', $model);
               } else {
                 $model->addresses()->delete();
+                AddressEvent::dispatch('soft-deleted', $model);
               }
           });
 
@@ -55,6 +57,7 @@ trait Addressable
               static::restoring(function ($model)
               {
                   $model->addresses()->withTrashed()->restore();
+                  AddressEvent::dispatch('restored', $model);
               });
           }
 
