@@ -4,6 +4,7 @@ namespace Nh\Addressable\Events;
 
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use App\Models\Address;
 
 class AddressEvent
 {
@@ -22,6 +23,6 @@ class AddressEvent
     {
           $this->name     = $name;
           $this->model    = $model;
-          $this->relation = $relation;
+          $this->relation = is_null($relation) ? new Address : $relation;
     }
 }
