@@ -17,7 +17,7 @@ class AddressEvent
     public $name;
 
     /**
-     * The model parent of the media
+     * The model parent of the address
      * @var \Illuminate\Database\Eloquent\Model
      */
     public $model;
