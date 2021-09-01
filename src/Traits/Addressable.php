@@ -43,11 +43,11 @@ trait Addressable
 
               if($isForceDelete)
               {
-                $model->addresses()->forceDelete();
-                AddressEvent::dispatch('force-deleted', $model);
+                $addresses = $model->addresses()->forceDelete();
+                AddressEvent::dispatch('force-deleted', $model, null, $addresses);
               } else {
-                $model->addresses()->delete();
-                AddressEvent::dispatch('soft-deleted', $model);
+                $addresses = $model->addresses()->delete();
+                AddressEvent::dispatch('soft-deleted', $model, null, $addresses);
               }
           });
 
@@ -56,8 +56,8 @@ trait Addressable
           {
               static::restoring(function ($model)
               {
-                  $model->addresses()->withTrashed()->restore();
-                  AddressEvent::dispatch('restored', $model);
+                  $addresses = $model->addresses()->withTrashed()->restore();
+                  AddressEvent::dispatch('restored', $model, null, $addresses);
               });
           }
 
@@ -153,9 +153,9 @@ trait Addressable
           // Dispatch the event
           if($address->wasRecentlyCreated)
           {
-              AddressEvent::dispatch('created', $this, $address);
+              AddressEvent::dispatch('created', $this, $address, 1);
           } else if($address->wasChanged()) {
-              AddressEvent::dispatch('updated', $this, $address);
+              AddressEvent::dispatch('updated', $this, $address, 1);
           }
       }
 
