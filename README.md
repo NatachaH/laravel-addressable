@@ -119,9 +119,8 @@ $user->setAddresses([
 # Events
 
 You can use the **AddressEvent** for dispatch events that happen to the addresses.
+*You can pass a name, the parent model, the address model (or null) and the number of addresses affected*
 
 ```
-AddressEvent::dispatch('my-event', $model, $address);
+AddressEvent::dispatch('my-event', $model, $address, 1);
 ```
-
-By default the method **$model->setAddress()** will fire the event **created** or **updated**
