@@ -26,14 +26,48 @@ class Address extends Model
      */
     public function getPostalAttribute()
     {
-        $break = "\n";
+        return $this->getPostal("\n");
+    }
 
-        $address = $this->street_1.$break;
-        $address .= $this->street_2 ? $this->street_2.$break : '';
-        $address .= $this->zip.' '.$this->city.$break;
-        $address .= $this->country ?? '';
+    /**
+     * Get the postal address inline format.
+     *
+     * @return string
+     */
+    public function getPostalInlineAttribute()
+    {
+        return $this->getPostal(", ");
+    }
 
-        return nl2br($address);
+    /**
+     * Get the postal address format.
+     * @param  string $break
+     * @return string
+     */
+    public function getPostal(string $break = ', ')
+    {
+        // Set the street 1
+        $address = $this->street_1;
+
+        // Set the break if street 2
+        if($this->street_1 && $this->street_2){ $address .= $break; }
+
+        // Set the street 2
+        $address .= $this->street_2;
+
+        // Set the break if zip or city
+        if($this->street_1 && ($this->zip || $this->city)){ $address .= $break; }
+
+        // Set the ZIP
+        $address .= $this->zip;
+
+        // Set space if zip and city exists
+        if($this->zip && $this->city){ $address .= ' '; }
+
+        // Set the city
+        $address .= $this->city;
+
+        return $address ? nl2br($address) : '-';
     }
 
 }
